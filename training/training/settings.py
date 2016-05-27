@@ -146,3 +146,10 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 25,
 }
+
+STATICFILES_DIRS = (
+        os.path.abspath(os.path.join(BASE_DIR, 'angular', 'src', 'crm', 'sb-admin-angular', 'app')),
+    os.path.abspath(os.path.join(BASE_DIR, 'angular', 'src', 'crm','sb-admin-angular','bower_components')),
+
+
+    )

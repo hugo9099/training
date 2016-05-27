@@ -23,6 +23,12 @@ class builderclass:
              'is_filter': False,
              'is_readOnly': False
              }
+    serializer = {'allow_blank': True,
+                  'default': '',
+                  'source': '',
+                  'max_length': '',
+                  'required': False
+                  }
     field = {'name': '',
              'type': '',
              'default': '',
@@ -34,7 +40,8 @@ class builderclass:
              'ForeignKey': '',
              'primary_key': False,
              'display': False,
-             'admin': admin
+             'admin': admin,
+             'serializer': ''
              }
 
     def generate_class(self):
@@ -59,17 +66,17 @@ class builderclass:
             if field_item:
                 type = field_item.get('type')
                 if type:
-                  if TYPE_Choice.get(type):
-                    field_item['type'] = TYPE_Choice.get(type)
+                    if TYPE_Choice.get(type):
+                        field_item['type'] = 'model.{}'.format(TYPE_Choice.get(type))
                 else:
-                    field_item['type'] = 'CharField'
+                    field_item['type'] = 'model.CharField'
                 template_field = "{} = {}(property)  \n".format(field_item['name'], field_item['type'])
                 field_item.pop('name', 0)
                 field_item.pop('type', 0)
                 propertys = ''
                 if field_item:
-                    propertys = ",".join( str('{}={}').format(key, value) for key,value  in field_item.iteritems())
-                template_field = template_field.replace('property',propertys)
+                    propertys = ",".join(str('{}={}').format(key, value) for key, value in field_item.iteritems())
+                template_field = template_field.replace('property', propertys)
                 template_class += template_field
                 # list_field_format.append(field_item)
 
@@ -125,13 +132,92 @@ class builderclass:
         template_class = template_class.format(class_name, class_name, display, search, read_only, filter)
         return template_class
 
+    def generate_serializer(self):
+        template_class = """class {}Serializer(serializers.ModelSerializer):
+                           {}"""
+        class_meta = """class Meta:
+                            model = {}""".format(self.map_class.get('Name'))
+        field_list = self.map_class.get('fields')
+        fields_formated = []
+        for field in field_list:
+            serializer_field = field['serializer']
+            field_name = field['name']
+            type = field.get('type')
+            properties = []
+            for key, value in serializer_field:
+                if 'bool' in str(type(value)):
+                    properties.append('{}= {}'.format(key, value))
+                elif value:
+                    properties.append('{}= {}'.format(key, value))
+            field_propertys = ','.join(properties)
+            fields_formated.append('{} = serializers.{}({})'.format(field_name, TYPE_Choice.get(type), field_propertys))
+        fields_formated.append(class_meta)
+        all_field = "\n".join(fields_formated)
+        template_class = template_class.format(self.map_class.get('Name'), all_field)
+        return template_class
+
+    def generate_viewset(self):
+
+        class_name = self.map_class.get('Name')
+        template_class = """ class {}ViewSet(viewsets.ModelViewSet):
+                                    model = {}
+                                    serializer_class = {}Serializer
+                                    queryset = {}.objects.all()
 
 
+        """.format(class_name, class_name, class_name, class_name)
+        template_filter_backends = """"({})"""
+        search = 'filters.SearchFilter'
+        ordering = 'filters.OrderingFilter'
+        filterbackend = 'filters.DjangoFilterBackend'
 
+        template_def = """def list(self, request, *args, **kwargs):
+                                return super({}ViewSet, self).list(request, *args, **kwargs)""".format(class_name)
+        template_search = """search_fields = ({})"""
 
+        template_ordering = """ordering_fields = ({})"""
 
+        template_filter = """filter_fields = ({})"""
 
+        list_search = []
+        list_ordering = []
+        list_filter = []
+        list_backend = []
 
+        field_list = self.map_class.get('fields')
+        for field in field_list:
+            admin_field = field['admin']
+            field_name = field['name']
+            if admin_field.get('is_searchfield'):
+               list_search.append(field_name)
+            if admin_field.get('is_filter'):
+               list_filter.append(field_name)
 
+        if len(list_search) > 0:
+            list_backend.append(search)
+            template_search = template_search.format(','.join(list_search))
+        else:
+            template_search = ''
 
+        if len(list_ordering) > 0:
+            list_backend.append(ordering)
+            template_ordering = template_ordering.format(','.join(list_ordering))
+        else:
+            template_ordering = ''
 
+        if len(list_filter) > 0:
+            list_backend.append(filterbackend)
+            template_filter = template_filter.format(','.join(list_filter))
+        else:
+            template_filter = ''
+
+        if len(list_backend) > 0:
+            template_filter_backends = template_filter_backends.format(','.join(list_backend))
+
+        return '{} \n {} \n {} \n {} \n {} \n {}'.format(template_class, template_filter_backends, template_search,
+                                                         template_ordering, template_filter, template_def)
+
+    def generate_url(self):
+        class_name = self.map_class.get('Name')
+        template = """ router.register(r'{}', views.{}ViewSet)""".format(class_name.lower(), class_name)
+        return template
