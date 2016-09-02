@@ -6,6 +6,8 @@
  * # MainCtrl
  * Controller of the sbAdminApp
  */
+function MainCtrl() {}
+
 angular.module('sbAdminApp')
   .controller('MainCtrl', function($scope,$position) {
   });

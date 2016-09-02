@@ -21,9 +21,9 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from training.libs.utils.static import staticfiles_urlpatterns as training_static
 
 # bower_components_folder = os.path.abspath(os.path.join(settings.BASE_DIR, 'angular', 'src', 'crm', 'bower_components'))
-app_dev_folder = os.path.abspath(os.path.join(settings.BASE_DIR, 'angular', 'src', 'crm', 'sb-admin-angular', 'app'))
+app_dev_folder = os.path.abspath(os.path.join(settings.BASE_DIR, 'angular', 'src', 'crm', 'app'))
 bower_components_folder = os.path.abspath(
-    os.path.join(settings.BASE_DIR, 'angular', 'src', 'crm', 'sb-admin-angular', 'bower_components'))
+    os.path.join(settings.BASE_DIR, 'angular', 'src', 'crm', 'bower_components'))
 
 api_root = 'crm/api/v1/' if settings.DEBUG else 'api/v1/'
 html_root = 'crm/' if settings.DEBUG else ''
@@ -43,6 +43,6 @@ if settings.DEBUG:
     urlpatterns += staticfiles_urlpatterns()
 
     # don't switch the order of the following lines because it will not work
-    urlpatterns += training_static('crm/sb-admin-angular/app', app_dev_folder, disable_caching=True)
-    urlpatterns += training_static('crm/sb-admin-angular/bower_components', bower_components_folder,
+    urlpatterns += training_static('crm/app', app_dev_folder, disable_caching=True)
+    urlpatterns += training_static('crm/bower_components', bower_components_folder,
                                    disable_caching=False)

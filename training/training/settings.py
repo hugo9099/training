@@ -148,8 +148,8 @@ REST_FRAMEWORK = {
 }
 
 STATICFILES_DIRS = (
-        os.path.abspath(os.path.join(BASE_DIR, 'angular', 'src', 'crm', 'sb-admin-angular', 'app')),
-    os.path.abspath(os.path.join(BASE_DIR, 'angular', 'src', 'crm','sb-admin-angular','bower_components')),
+    os.path.abspath(os.path.join(BASE_DIR, 'angular', 'src', 'crm', 'app')),
+    os.path.abspath(os.path.join(BASE_DIR, 'angular', 'src', 'crm', 'bower_components')),
 
 
     )

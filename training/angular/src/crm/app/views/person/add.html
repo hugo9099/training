@@ -1,0 +1,58 @@
+
+<div class="modal-body" ng-controller="AddPersonCtrl as addpersonCtrl" >
+    <div class="row">
+        <h5>Add new Person</h5>
+    </div>
+
+    <div class="ibox-content" >
+        <form method="post" class="form-horizontal ng-pristine ng-valid">
+            <div class="row">
+                <div class="form-group ">
+                    <label class="col-sm-4 control-label">Firstname</label>
+                    <div class="col-sm-6">
+                        <input type="text" ng-model="addpersonCtrl.attributes.firstname"
+                               name="fieldFirstname"
+                               class="form-control">
+                    </div>
+                </div>
+
+
+                <div class="form-group ">
+                    <label class="col-sm-4 control-label">Lastname</label>
+                    <div class="col-sm-6">
+                        <input type="text" ng-model="addpersonCtrl.attributes.lastname"
+                               name="fieldLastname"
+                               class="form-control">
+                    </div>
+                </div>
+
+
+                <div class="form-group ">
+                    <label class="col-sm-4 control-label">Age</label>
+                    <div class="col-sm-6">
+                        <input type="text" ng-model="addpersonCtrl.attributes.age"
+                               name="fieldAge"
+                               class="form-control">
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="row">
+                <br/>
+
+                <div class="form-group">
+                    <div class="text-center">
+                        <button class="btn btn-sm btn-primary m-t-n-xs" style="width: 80px" ng-click="ok()">
+                            <strong>Save</strong>
+                        </button>
+                        <button class="btn btn-sm btn-white m-t-n-xs" style="width: 80px" ng-click="cancel()">
+                            <strong>Cancel</strong></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+    

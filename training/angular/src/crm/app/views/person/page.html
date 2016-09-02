@@ -1,0 +1,42 @@
+
+<div class="wrapper wrapper-content animated fadeInRight" ng-controller="PersonCtrl as personCtrl">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel-heading">
+                    <button type="button" class="btn btn-success" ng-click="personCtrl.addItem()"><i class="fa fa-plus"></i></button>
+                    Person
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table">
+
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Firstname</th> <th>Lastname</th> <th>Age</th>
+                                </tr>
+                                </thead>
+
+
+                                <tbody>
+                                <tr ng-repeat="item in personCtrl.itemList">
+                                    <td><a ng-click="personCtrl.update(item)" title="Edit"><i
+                                            class="fa fa-pencil text-navy"></i> </a></td>
+                                    <td>{item.firstname }</td>   <td>{item.lastname }</td>   <td>{item.age }</td>
+                                </tr>
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    

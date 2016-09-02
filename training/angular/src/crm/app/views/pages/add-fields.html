@@ -1,0 +1,165 @@
+<div ng-controller="AddFieldCtrl as addFieldCtrl">
+    <div class="modal-content">
+        <div class="ibox-title">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">×</button>
+                <h4 class="modal-title" id="myModalLabel">Add new field</h4>
+            </div>
+        </div>
+
+        <div class="modal-body">
+            <div class="row">
+                <form method="post" class="form-horizontal ng-pristine ng-valid">
+                    <div class="form-group ">
+                        <label class="col-sm-4 control-label">Field Name</label>
+
+                        <div class="col-sm-6">
+                            <input type="text" ng-model="addFieldCtrl.fieldAttribute.name" name="fieldName"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Verbose Field Name</label>
+
+                        <div class="col-sm-6">
+                            <input type="text" ng-model="addFieldCtrl.fieldAttribute.verbose_name"
+                                   name="verboseFieldName" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show=" addFieldCtrl.fieldAttribute.dataType=== 'ForeignKey'">
+                        <label class="col-sm-4 control-label">ForeignKey</label>
+
+                        <div class="col-sm-6">
+                            <input type="text" ng-model="addFieldCtrl.fieldAttribute.ForeignKey"
+
+                                   name="foreignKeyFieldName" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Default Value</label>
+
+                        <div class="col-sm-6">
+                            <input type="text" name="defaultValue"
+                                   ng-model="addFieldCtrl.fieldAttribute.default"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Field Type</label>
+
+                        <div class="col-sm-6">
+                            <select class="form-control"
+                                    ng-model="addFieldCtrl.fieldAttribute.dataType"
+                                    required>
+                                <option ng-repeat="item in addFieldCtrl.typeChoice"
+                                        value="{{item.id}}">{{item.label}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div><label class="col-sm-5 control-label">
+                            <input type="checkbox"
+                                   ng-model="addFieldCtrl.fieldAttribute.allowBlank"
+                                   required> Allow blank</label></div>
+                        <div><label class="col-sm-5 control-label">
+                            <input type="checkbox"
+                                   ng-model="addFieldCtrl.fieldAttribute.allowNull"> Allow null </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div><label class="col-sm-5 control-label">
+                            <input type="checkbox"
+                                   ng-model="addFieldCtrl.fieldAttribute.primary_key"> Primary key
+                        </label></div>
+                        <div><label class="col-sm-5 control-label">
+                            <input type="checkbox"
+                                   ng-model="addFieldCtrl.fieldAttribute.display"> Display&nbsp;&nbsp;
+                        </label></div>
+                    </div>
+                    <div class="form-group">
+                        <div><label class="col-sm-5 control-label">
+                            <input type="checkbox"
+                                   ng-model="addFieldCtrl.have_admin"> Create Admin&nbsp;&nbsp;</label></div>
+                        <div><label class="col-sm-5 control-label">
+                            <input type="checkbox" ng-model="addFieldCtrl.have_serializer">Create Serializer </label></div>
+                    </div>
+
+
+                    <div class="panel-body" ng-show="addFieldCtrl.have_admin">
+                        <div class="list-group">
+                            <div><label class="col-sm-5 control-label">
+                                <input type="checkbox" ng-model="addFieldCtrl.admin.is_searchfield"> Search Field&nbsp;
+                            </label></div>
+                            <div><label class="col-sm-5 control-label">
+                                <input type="checkbox" ng-model="addFieldCtrl.admin.isdisplayname"> Display name&nbsp;
+                            </label></div>
+                            <div><label class="col-sm-5 control-label">
+                                <input type="checkbox" ng-model="addFieldCtrl.admin.is_filter"> Filter&nbsp;&nbsp;
+                            </label></div>
+                            <div><label class="col-sm-5 control-label">
+                                <input type="checkbox" ng-model="addFieldCtrl.admin.is_readOnly"> Read Only&nbsp;&nbsp;
+                            </label></div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group" ng-show="addFieldCtrl.have_serializer">
+                        <div class="list-group">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Default value</label>
+
+                                <div class="col-sm-6">
+                                    <input type="text" name="defaultSerializer"
+                                           class="form-control"
+                                           ng-model="addFieldCtrl.serializer.default">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="list-group">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Source Serializer</label>
+
+                                <div class="col-sm-6">
+                                    <input type="text" name="sourceSerializer"
+                                           ng-model="addFieldCtrl.serializer.source"
+                                           class="form-control">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="list-group">
+                            <div class="form-group">
+                                <div><label class="col-sm-5 control-label">
+                                    <input type="checkbox"
+                                           ng-model="addFieldCtrl.serializer.required"> Required</label>
+                                </div>
+                                <div><label class="col-sm-5 control-label">
+                                    <input type="checkbox"
+                                           ng-model="addFieldCtrl.serializer.allow_blank"> Allow blank</label>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <br/>
+                        <div class="form-group">
+                            <div class="text-center">
+                                <button class="btn btn-sm btn-primary m-t-n-xs" style="width: 80px" ng-click="ok()" ><strong>Save</strong>
+                                </button>
+                                <button class="btn btn-sm btn-white m-t-n-xs" style="width: 80px" ng-click="cancel()">
+                                    <strong>Cancel</strong></button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
