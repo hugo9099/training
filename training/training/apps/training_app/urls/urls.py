@@ -10,6 +10,7 @@ router.register(r'cities', views.CityViewSet)
 
 urlpatterns = patterns('training.apps.training_app',
                        url(r'^FieldType/$', views.FieldType, name='FieldType'),
-                       url(r'^build-class/$', views.build_class, name='build-class'),)
+                       url(r'^build-class/$', views.build_class, name='build-class'),
+                       url(r'^build-view/$', views.build_view, name='build-view'),)
 
 urlpatterns += router.urls

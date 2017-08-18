@@ -140,13 +140,11 @@ STATIC_URL = '/static/'
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ],
+    'DEFAULT_PERMISSION_CLASSES': [],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 25,
 }
-
+# 'rest_framework.permissions.IsAuthenticated',
 STATICFILES_DIRS = (
     os.path.abspath(os.path.join(BASE_DIR, 'angular', 'src', 'crm', 'app')),
     os.path.abspath(os.path.join(BASE_DIR, 'angular', 'src', 'crm', 'bower_components')),

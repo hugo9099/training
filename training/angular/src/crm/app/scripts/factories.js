@@ -30,3 +30,10 @@ factories.factory('Generate', function($resource){
         }
     });
 });
+factories.factory('GenerateView', function($resource){
+    return $resource(apiPath + '/training/build-view/', {}, {
+        query: {
+            method: 'GET'
+        }
+    });
+});

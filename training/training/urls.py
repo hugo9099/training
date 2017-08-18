@@ -22,8 +22,7 @@ from training.libs.utils.static import staticfiles_urlpatterns as training_stati
 
 # bower_components_folder = os.path.abspath(os.path.join(settings.BASE_DIR, 'angular', 'src', 'crm', 'bower_components'))
 app_dev_folder = os.path.abspath(os.path.join(settings.BASE_DIR, 'angular', 'src', 'crm', 'app'))
-bower_components_folder = os.path.abspath(
-    os.path.join(settings.BASE_DIR, 'angular', 'src', 'crm', 'bower_components'))
+bower_components_folder = os.path.abspath(os.path.join(settings.BASE_DIR, 'angular', 'src', 'crm', 'bower_components'))
 
 api_root = 'crm/api/v1/' if settings.DEBUG else 'api/v1/'
 html_root = 'crm/' if settings.DEBUG else ''
